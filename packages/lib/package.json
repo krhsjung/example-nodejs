@@ -1,0 +1,11 @@
+
+{
+  "name": "lib",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "echo Building lib",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

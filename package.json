@@ -1,0 +1,14 @@
+{
+  "name": "example-nodejs",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build:lib": "npm run build --workspace=lib",
+    "api": "npm run start --workspace=api",
+    "test:api": "npm run test --workspace=api",
+    "test:lib": "npm run test --workspace=lib"
+  }
+}
