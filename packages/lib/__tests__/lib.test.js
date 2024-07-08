@@ -1,5 +1,5 @@
-import lib from '../lib/lib.js';
+import test from '../lib/lib.js';
 import { strict as assert } from 'assert';
 
-assert.strictEqual(lib(), 'Hello from lib');
+assert.strictEqual(test(), 'Hello from lib');
 console.info('lib tests passed');

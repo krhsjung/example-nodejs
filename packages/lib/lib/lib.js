@@ -1,3 +1,3 @@
-export default function lib() {
+export default function test() {
   return 'Hello from lib';
 }
