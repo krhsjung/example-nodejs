@@ -1,13 +1,19 @@
 import express from "express";
+import morgan from "morgan"
 import apiRouter from "./routes/routes.js"
 
 const app = express();
+const router = express.Router();
 const port = 3000;
 
-// health 체크
-app.get("/", (req, res) => res.sendStatus(200));
+// HTTP request logger middleware 추가
+app.use(morgan("dev"));
 
-app.use("/api", apiRouter)
+// health 체크
+router.get("/", (req, res) => res.sendStatus(200));
+router.use("/api", apiRouter);
+
+app.use(router);
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
