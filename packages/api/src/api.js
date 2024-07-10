@@ -1,10 +1,14 @@
 import express from "express";
 import morgan from "morgan"
 import apiRouter from "./routes/routes.js"
+import { config } from "dotenv";
+
+// .env 파일에서 환경 변수 불러오기.
+config();
 
 const app = express();
 const router = express.Router();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // HTTP request logger middleware 추가
 app.use(morgan("dev"));
