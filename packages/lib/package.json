@@ -18,6 +18,7 @@
     "url": "git+https://github.com/krhsjung/example-nodejs.git"
   },
   "scripts": {
+    "load:db": "dotenv -e ../.env -- cross-var sequelize-auto -o './lib/models' -d %DB_DATABASE% -h %DB_HOST% -u %DB_USERNAME% -p %DB_PORT% -x %DB_PASSWORD% -e %DB_DRIVER% -l esm",
     "test": "node ./__tests__/lib.test.js"
   },
   "bugs": {
@@ -25,5 +26,10 @@
   },
   "homepage": "https://github.com/krhsjung/example-nodejs#readme",
   "module": "dist/lib.module.js",
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "cross-var": "^1.1.0",
+    "dotenv-cli": "^7.4.2",
+    "sequelize-auto": "^0.8.8"
+  }
 }
