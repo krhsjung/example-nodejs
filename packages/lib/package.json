@@ -18,7 +18,7 @@
     "url": "git+https://github.com/krhsjung/example-nodejs.git"
   },
   "scripts": {
-    "load:db": "dotenv -e ../.env -- cross-var sequelize-auto -o './lib/models' -d %DB_DATABASE% -h %DB_HOST% -u %DB_USERNAME% -p %DB_PORT% -x %DB_PASSWORD% -e %DB_DRIVER% -l esm",
+    "load:db": "dotenv -e ../../.env -- cross-var sequelize-auto -o './lib/models' -d %DB_DATABASE% -h %DB_HOST% -u %DB_USERNAME% -p %DB_PORT% -x %DB_PASSWORD% -e %DB_DRIVER% -l esm",
     "test": "node ./__tests__/lib.test.js"
   },
   "bugs": {
@@ -29,8 +29,11 @@
   "type": "module",
   "dependencies": {
     "dotenv": "^16.4.5",
+    "joi": "^17.13.3",
+    "joi-to-swagger": "github:GoodRequest/joi-to-swagger",
     "mariadb": "^3.3.1",
-    "sequelize": "^6.37.3"
+    "sequelize": "^6.37.3",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "cross-var": "^1.1.0",

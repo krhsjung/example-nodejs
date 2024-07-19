@@ -17,6 +17,20 @@ export default class T_USER extends Model {
     USER_NAME: {
       type: DataTypes.STRING(64),
       allowNull: false
+    },
+    NICK_NAME: {
+      type: DataTypes.STRING(64),
+      allowNull: false
+    },
+    EMAIL: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      unique: "EMAIL_UNIQUE"
+    },
+    CREATED_DATE: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.Sequelize.fn('current_timestamp')
     }
   }, {
     sequelize,
@@ -37,6 +51,14 @@ export default class T_USER extends Model {
         using: "BTREE",
         fields: [
           { name: "LOGIN_ID" },
+        ]
+      },
+      {
+        name: "EMAIL_UNIQUE",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "EMAIL" },
         ]
       },
     ]
