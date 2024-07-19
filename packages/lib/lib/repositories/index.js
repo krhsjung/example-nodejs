@@ -1,5 +1,3 @@
-import { UserRepository } from "./user.repository.js";
+import userRepository from "./user.repository.js";
 
-export {
-  UserRepository
-}
+export { userRepository };

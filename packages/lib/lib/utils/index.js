@@ -1,1 +1,1 @@
-export { ResponseType } from "./response.js";
+export { ResponseType, SwaggerResponseExample } from "./response.js";

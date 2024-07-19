@@ -1,9 +1,8 @@
 import express from "express";
-import { ResponseType, UserRepository, UserValidator } from "lib";
-import { v4 as uuidv4 } from "uuid";
+import { wrapAsyncController, checkValidation, UserValidator } from "lib";
+import { userController } from "../../controllers/index.js";
 
 const userRouter = express.Router();
-const userRepository = new UserRepository();
 
 /**
  *  @swagger
@@ -22,24 +21,7 @@ const userRepository = new UserRepository();
  *              OK:
  *                $ref: '#components/examples/OK_USER_LIST'
  */
-userRouter.get("/list", async (req, res) => {
-  const users = (
-    await userRepository.findAll()
-  ).map((user) => {
-    return {
-      userId: user.ID,
-      loginId: user.LOGIN_ID,
-      userName: user.USER_NAME,
-      nickname: user.NICK_NAME,
-      email: user.EMAIL
-    }
-  });
-
-  res.status(200).json({
-    ...ResponseType.OK,
-    data: users
-  });
-});
+userRouter.get("/list", wrapAsyncController(userController.list));
 
 /**
  *  @swagger
@@ -73,34 +55,7 @@ userRouter.get("/list", async (req, res) => {
  *              DATA_FORMAT_ERROR:
  *                $ref: '#components/examples/DATA_FORMAT_ERROR'
  */
-userRouter.post("/signup", async (req, res) => {
-
-  const result = UserValidator.signup.validate(req.body);
-  if (result.error) {
-    res.status(200).json({
-      ...ResponseType.DATA_FORMAT_ERROR,
-      message: result.error
-    });
-    return;
-  }
-
-  const { loginId, userName, nickname, email } = req.body;
-
-  const userByLogin = await userRepository.findOneByLoginId(loginId);
-  if (userByLogin) {
-    res.status(200).json(ResponseType.LOGIN_ID_EXISTS);
-    return;
-  }
-
-  const userByEmail = await userRepository.findOneByEmail(email);
-  if (userByEmail) {
-    res.status(200).json(ResponseType.EMAIL_EXISTS);
-    return;
-  }
-  
-  await userRepository.signinUser(uuidv4(), loginId, userName, nickname, email);
-  res.status(200).json(ResponseType.OK);
-});
+userRouter.post("/signup", checkValidation(UserValidator.signup, 'body'), wrapAsyncController(userController.signup));
 
 /**
  *  @swagger
@@ -125,36 +80,7 @@ userRouter.post("/signup", async (req, res) => {
  *              DATA_FORMAT_ERROR:
  *                $ref: '#components/examples/DATA_FORMAT_ERROR'
  */
-userRouter.get("/:userId", async (req, res) => {
-
-  const result = UserValidator.id.validate(req.params);
-  if (result.error) {
-    res.status(200).json({
-      ...ResponseType.DATA_FORMAT_ERROR,
-      message: result.error
-    });
-    return;
-  }
-
-  const { userId } = req.params;
-
-  const userInfo = await userRepository.findOneById(userId);
-  if (!userInfo) {
-    res.status(200).json(ResponseType.NO_USER);
-    return;
-  }
-
-  res.status(200).json({
-    ...ResponseType.OK,
-    data: {
-      userId: userInfo.ID,
-      loginId: userInfo.LOGIN_ID,
-      userName: userInfo.USER_NAME,
-      nickname: userInfo.NICK_NAME,
-      email: userInfo.EMAIL
-    }
-  });
-});
+userRouter.get("/:userId", checkValidation(UserValidator.id, 'params'), wrapAsyncController(userController.user));
 
 /**
  *  @swagger
@@ -186,51 +112,7 @@ userRouter.get("/:userId", async (req, res) => {
  *              DATA_FORMAT_ERROR:
  *                $ref: '#components/examples/DATA_FORMAT_ERROR'
  */
-userRouter.put("/update", async (req, res) => {
-
-  const result = UserValidator.update.validate(req.body);
-  if (result.error) {
-    res.status(200).json({
-      ...ResponseType.DATA_FORMAT_ERROR,
-      message: result.error
-    });
-    return;
-  }
-
-  const { userId, loginId, userName, nickname, email } = req.body;
-
-  const userById = await userRepository.findOneById(userId);
-  if (!userById) {
-    res.status(200).json(ResponseType.NO_USER);
-    return;
-  }
-
-  const userByLogin = await userRepository.findOneByLoginId(loginId);
-  if (userByLogin && userByLogin.ID != userId) {
-    res.status(200).json(ResponseType.LOGIN_ID_EXISTS);
-    return;
-  }
-
-  const userByEmail = await userRepository.findOneByEmail(email);
-  if (userByEmail && userByEmail.ID != userId) {
-    res.status(200).json(ResponseType.EMAIL_EXISTS);
-    return;
-  }
-
-  await userRepository.updateUser(userId, loginId, userName, nickname, email);
-
-  const userInfo = await userRepository.findOneById(userId);
-  res.status(200).json({
-    ...ResponseType.OK,
-    data: {
-      userId: userInfo.ID,
-      loginId: userInfo.LOGIN_ID,
-      userName: userInfo.USER_NAME,
-      nickname: userInfo.NICK_NAME,
-      email: userInfo.EMAIL
-    }
-  });
-});
+userRouter.put("/update", checkValidation(UserValidator.update, "body"), wrapAsyncController(userController.update));
 
 /**
  *  @swagger
@@ -262,27 +144,6 @@ userRouter.put("/update", async (req, res) => {
  *              DATA_FORMAT_ERROR:
  *                $ref: '#components/examples/DATA_FORMAT_ERROR'
  */
-userRouter.delete("/delete", async (req, res) => {
-
-  const result = UserValidator.id.validate(req.body);
-  if (result.error) {
-    res.status(200).json({
-      ...ResponseType.DATA_FORMAT_ERROR,
-      message: result.error
-    });
-    return;
-  }
-
-  const { userId } = req.body;
-
-  const userById = await userRepository.findOneById(userId);
-  if (!userById) {
-    res.status(200).json(ResponseType.NO_USER);
-    return;
-  }
-
-  await userRepository.deleteUser(userId);
-  res.status(200).json(ResponseType.OK);
-});
+userRouter.delete("/delete", checkValidation(UserValidator.id, "body"), wrapAsyncController(userController.delete));
 
 export default userRouter;

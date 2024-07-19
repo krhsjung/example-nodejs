@@ -1,10 +1,10 @@
 import T_USER from "../models/T_USER.js"
 
-export class UserRepository {
-
+class UserRepository {
   findAll = async () => {
     return await T_USER.findAll({ order: [["CREATED_DATE", "DESC"]], });
   };
+  
   findOneById = async (userId) => {
     return await T_USER.findOne({ where: { ID: userId } });
   };
@@ -44,3 +44,5 @@ export class UserRepository {
     return await T_USER.destroy({ where: { ID: userId } });
   }
 }
+
+export default new UserRepository();

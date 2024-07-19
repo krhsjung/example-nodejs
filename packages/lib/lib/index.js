@@ -24,10 +24,11 @@ export default function test() {
 export * from "./repositories/index.js";
 
 // For swagger
-export * from "./schemas/index.js"
+export * from "./schemas/index.js";
 
 // For Util
-export * from "./utils/index.js"
-export * from "./validators/index.js"
+export * from "./middlewares/index.js";
+export * from "./utils/index.js";
+export * from "./validators/index.js";
 
 

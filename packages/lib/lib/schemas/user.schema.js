@@ -3,7 +3,6 @@ import j2s from 'joi-to-swagger';
 import { UserValidator } from '../validators/index.js';
 
 export default class UserSchema {
-
   // parameters
   static pathUserId = {
     name: "userId",

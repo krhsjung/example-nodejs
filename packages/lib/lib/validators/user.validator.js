@@ -1,7 +1,6 @@
 import Joi from "joi";
 
 export default class UserValidator {
-  
   static id = Joi.object({
     userId: Joi.string().guid(),
   });
@@ -20,5 +19,4 @@ export default class UserValidator {
     nickname: Joi.string().required().default("hsjung"),
     email: Joi.string().required().email().default("kr.hs.jung@gmail.com"),
   });
-
 }
