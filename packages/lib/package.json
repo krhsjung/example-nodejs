@@ -29,6 +29,7 @@
   "type": "module",
   "dependencies": {
     "dotenv": "^16.4.5",
+    "firebase-admin": "^12.2.0",
     "joi": "^17.13.3",
     "joi-to-swagger": "github:GoodRequest/joi-to-swagger",
     "mariadb": "^3.3.1",
