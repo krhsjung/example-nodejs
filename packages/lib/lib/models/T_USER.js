@@ -9,23 +9,9 @@ export default class T_USER extends Model {
       allowNull: false,
       primaryKey: true
     },
-    LOGIN_ID: {
-      type: DataTypes.STRING(64),
-      allowNull: false,
-      unique: "LOGIN_ID_UNIQUE"
-    },
-    USER_NAME: {
-      type: DataTypes.STRING(64),
-      allowNull: false
-    },
-    NICK_NAME: {
-      type: DataTypes.STRING(64),
-      allowNull: false
-    },
     EMAIL: {
       type: DataTypes.STRING(255),
-      allowNull: false,
-      unique: "EMAIL_UNIQUE"
+      allowNull: true
     },
     CREATED_DATE: {
       type: DataTypes.DATE,
@@ -43,22 +29,6 @@ export default class T_USER extends Model {
         using: "BTREE",
         fields: [
           { name: "ID" },
-        ]
-      },
-      {
-        name: "LOGIN_ID_UNIQUE",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "LOGIN_ID" },
-        ]
-      },
-      {
-        name: "EMAIL_UNIQUE",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "EMAIL" },
         ]
       },
     ]
