@@ -1,2 +1,2 @@
-export * from "./response.js";
+export * from "./rest.api.js"
 export * from "./firebase.admin.js"

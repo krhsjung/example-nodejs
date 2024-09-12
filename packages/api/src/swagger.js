@@ -1,7 +1,7 @@
 import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUi from 'swagger-ui-express';
 import json from "../package.json" assert { type: "json" };
-import { SwaggerResponseExample, UserSchema } from "lib";
+import { AuthSchema, UserSchema, SwaggerResponseExample } from "lib";
 
 const definition = {
   openapi: '3.0.0',
@@ -14,6 +14,7 @@ const definition = {
   }],
   components: {
     schemas: {
+      ...AuthSchema.schemas,
       ...UserSchema.schemas,
     },
     parameters: {
