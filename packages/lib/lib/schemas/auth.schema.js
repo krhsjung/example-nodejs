@@ -5,6 +5,7 @@ export default class AuthSchema {
 
   // schemas
   static schemas = {
-    ExchangeToken: j2s(AuthValidator.exchangingToken).swagger,
+    ExchangeToken: j2s(AuthValidator.exchangeToken).swagger,
+    RefreshToken: j2s(AuthValidator.refreshToken).swagger,
   }
 }

@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 export default class AuthValidator {
-  static exchangedToken = Joi.object({
+  static token = Joi.object({
     access_token: Joi.string(),
     expires_in: Joi.number(),
     'not-before-policy': Joi.number(),
@@ -11,8 +11,12 @@ export default class AuthValidator {
     token_type: Joi.string(),
   });
 
-  static exchangingToken = Joi.object({
+  static exchangeToken = Joi.object({
     token: Joi.string().required(),
     issuer: Joi.string().required(),
+  });
+
+  static refreshToken = Joi.object({
+    refreshToken: Joi.string().required(),
   });
 }
